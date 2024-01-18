@@ -28,7 +28,7 @@ public class PostService {
         List<Post> posts;
 
         if (author != null && !author.isEmpty()) {
-            posts = postRepository.findByAuthorLike("%" + author + "%");
+            posts = postRepository.findByAuthorContaining(author);
         } else {
             posts = postRepository.findAll();
         }

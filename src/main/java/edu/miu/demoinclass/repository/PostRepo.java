@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface PostRepo extends JpaRepository<Post, Long> {
-    List<Post> findByAuthorLike(String like);
+    List<Post> findByAuthorContaining(String author);
 }
