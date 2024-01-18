@@ -1,61 +1,62 @@
 package edu.miu.demoinclass.service;
 
-import edu.miu.demoinclass.dto.PostDto;
-import edu.miu.demoinclass.dto.PostResponseDto;
+import edu.miu.demoinclass.dto.input.PostDto;
+import edu.miu.demoinclass.dto.output.PostResponseDto;
 import edu.miu.demoinclass.model.Post;
-import edu.miu.demoinclass.repository.PostRepository;
+import edu.miu.demoinclass.repository.PostRepo;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class PostService {
 
-    private final PostRepository postRepository;
+    private final PostRepo postRepository;
     private final ModelMapper modelMapper;
 
     @Autowired
-    public PostService(PostRepository postRepository, ModelMapper modelMapper) {
+    public PostService(PostRepo postRepository, ModelMapper modelMapper) {
         this.postRepository = postRepository;
         this.modelMapper = modelMapper;
     }
 
-    public List<PostResponseDto> findAllPosts(Map<String, String> filters) {
+    public List<PostResponseDto> findAllPosts(String author) {
         List<Post> posts;
 
-        if (filters != null && !filters.isEmpty()) {
-            // If filters are provided, customize the logic based on your requirements
-            posts = postRepository.findPostsByFilters(filters);
+        if (author != null && !author.isEmpty()) {
+            posts = postRepository.findByAuthorLike("%" + author + "%");
         } else {
-            // Otherwise, get all posts
-            posts = postRepository.findAllPosts();
+            posts = postRepository.findAll();
         }
 
         return convertToResponseDtoList(posts);
     }
 
     public PostResponseDto findPostById(long id) {
-        Post post = postRepository.findPostById(id);
-        return (post != null) ? convertToResponseDto(post) : null;
+        Optional<Post> post = postRepository.findById(id);
+        return post.map(this::convertToResponseDto).orElse(null);
     }
 
     public long createAndSavePost(PostDto postDto) {
         Post post = modelMapper.map(postDto, Post.class);
-        long savedPostId = postRepository.savePost(post);
-        return savedPostId;
+        Post savedPost = postRepository.save(post);
+        return savedPost.getId();
     }
 
-    public boolean deletePostById(long id) {
-        return postRepository.deletePostById(id);
+    public void deletePostById(long id) {
+        postRepository.deleteById(id);
     }
 
-    public boolean updatePostById(long id, PostDto updatedDto) {
+    public void updatePostById(long postId, PostDto updatedDto) {
         Post updatedPost = modelMapper.map(updatedDto, Post.class);
-        return postRepository.updatePostById(id, updatedPost);
+        if (postRepository.existsById(postId)) {
+            updatedPost.setId(postId);
+            postRepository.save(updatedPost);
+        }
     }
 
     private PostResponseDto convertToResponseDto(Post post) {

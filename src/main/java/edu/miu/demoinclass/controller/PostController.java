@@ -1,16 +1,13 @@
 package edu.miu.demoinclass.controller;
 
-import edu.miu.demoinclass.dto.PostDto;
-import edu.miu.demoinclass.dto.PostResponseDto;
-import edu.miu.demoinclass.model.Post;
+import edu.miu.demoinclass.dto.input.PostDto;
+import edu.miu.demoinclass.dto.output.PostResponseDto;
 import edu.miu.demoinclass.service.PostService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/posts")
@@ -25,10 +22,9 @@ public class PostController {
 
     @GetMapping({"/", ""})
     public ResponseEntity<List<PostResponseDto>> findAllPosts(
-        @RequestParam(required = false) Map<String, String> filters
+        @RequestParam(required = false) String author
     ) {
-        List<PostResponseDto> posts = postService.findAllPosts(filters);
-
+        List<PostResponseDto> posts = postService.findAllPosts(author);
         return ResponseEntity.ok(posts);
     }
 
@@ -48,21 +44,13 @@ public class PostController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deletePostById(@PathVariable long id) {
-        boolean success = postService.deletePostById(id);
-        if (success) {
-            return ResponseEntity.ok("Post deleted successfully");
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        postService.deletePostById(id);
+        return ResponseEntity.ok("Post deleted successfully");
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<String> updatePostById(@PathVariable long id, @RequestBody PostDto postDto) {
-        boolean success = postService.updatePostById(id, postDto);
-        if (success) {
-            return ResponseEntity.ok("Post updated successfully");
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        postService.updatePostById(id, postDto);
+        return ResponseEntity.ok("Post updated successfully");
     }
 }
