@@ -7,15 +7,10 @@ import java.util.List;
 
 @Entity
 @Data
-public class Post {
+public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
-    String title;
-    String content;
-    String author;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "post_id")
-    List<Comment> comments;
+    String name;
 }

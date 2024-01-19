@@ -20,37 +20,41 @@ public class PostController {
         this.postService = postService;
     }
 
-    @GetMapping({"/", ""})
+    @GetMapping
     public ResponseEntity<List<PostResponseDto>> findAllPosts(
-        @RequestParam(required = false) String author
+        @RequestParam(required = false) String author,
+        @RequestParam(required = false) String title
     ) {
-        List<PostResponseDto> posts = postService.findAllPosts(author);
+        List<PostResponseDto> posts = postService.findAllPosts(author, title);
+
         return ResponseEntity.ok(posts);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<PostResponseDto> findPostById(@PathVariable long id) {
         PostResponseDto responseDto = postService.findPostById(id);
-        return (responseDto != null)
-                ? ResponseEntity.ok(responseDto)
-                : ResponseEntity.notFound().build();
+
+        return ResponseEntity.ok(responseDto);
     }
 
-    @PostMapping({"/", ""})
+    @PostMapping
     public ResponseEntity<Long> createPost(@RequestBody PostDto postDto) {
         Long savedPostId = postService.createAndSavePost(postDto);
+
         return ResponseEntity.ok(savedPostId);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deletePostById(@PathVariable long id) {
         postService.deletePostById(id);
-        return ResponseEntity.ok("Post deleted successfully");
+
+        return ResponseEntity.ok("Post " + id + " deleted successfully");
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<String> updatePostById(@PathVariable long id, @RequestBody PostDto postDto) {
         postService.updatePostById(id, postDto);
-        return ResponseEntity.ok("Post updated successfully");
+
+        return ResponseEntity.ok("Post " + id + " updated successfully");
     }
 }

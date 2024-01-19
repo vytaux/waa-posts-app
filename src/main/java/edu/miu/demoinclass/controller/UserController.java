@@ -1,8 +1,11 @@
 package edu.miu.demoinclass.controller;
 
+import edu.miu.demoinclass.dto.input.CommentDto;
 import edu.miu.demoinclass.dto.input.UserDto;
+import edu.miu.demoinclass.dto.output.CommentResponseDto;
 import edu.miu.demoinclass.dto.output.PostResponseDto;
 import edu.miu.demoinclass.dto.output.UserResponseDto;
+import edu.miu.demoinclass.service.CommentService;
 import edu.miu.demoinclass.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,37 +18,75 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final CommentService commentService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(CommentService commentService, UserService userService) {
+        this.commentService = commentService;
         this.userService = userService;
     }
 
-    @GetMapping({"/", ""})
+    @GetMapping
     public ResponseEntity<List<UserResponseDto>> findAllUsers(
-            @RequestParam(required = false) boolean havingMoreThan1Post
+            @RequestParam(required = false) Integer havingMoreThanNPosts,
+            @RequestParam(required = false) String title
     ) {
-        List<UserResponseDto> users = userService.findAllUsers(havingMoreThan1Post);
+        List<UserResponseDto> users = userService
+                .findAllUsers(havingMoreThanNPosts, title);
+
         return ResponseEntity.ok(users);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<UserResponseDto> findUserById(@PathVariable long id) {
         UserResponseDto responseDto = userService.findUserById(id);
-        return (responseDto != null)
-                ? ResponseEntity.ok(responseDto)
-                : ResponseEntity.notFound().build();
+
+        return ResponseEntity.ok(responseDto);
     }
 
-    @PostMapping({"/", ""})
+    @PostMapping
     public ResponseEntity<Long> createUser(@RequestBody UserDto userDto) {
         Long savedUserId = userService.createAndSaveUser(userDto);
+
         return ResponseEntity.ok(savedUserId);
     }
 
-    @GetMapping({"/{id}/posts", "/{id}/posts/"})
+    @GetMapping("/{id}/posts")
     public ResponseEntity<List<PostResponseDto>> findAllUserPosts(@PathVariable long id) {
         List<PostResponseDto> posts = userService.findAllUserPosts(id);
+
         return ResponseEntity.ok(posts);
+    }
+
+    @GetMapping("/{userId}/posts/{postId}/comments/{commentId}")
+    public ResponseEntity<CommentResponseDto> findUserPostComment(
+            @PathVariable long userId,
+            @PathVariable long postId,
+            @PathVariable long commentId
+    ) {
+        CommentResponseDto responseDto = userService.findUserPostComment(
+            postId,
+            commentId
+        );
+
+        return ResponseEntity.ok(responseDto);
+    }
+
+    @PostMapping("/{userId}/posts/{postId}/comments")
+    public ResponseEntity<Long> createUserPostComment(
+            @PathVariable long userId,
+            @PathVariable long postId,
+            @RequestBody CommentDto commentDto
+    ) {
+        Long savedCommentId = commentService.createAndSaveComment(userId, postId, commentDto);
+
+        return ResponseEntity.ok(savedCommentId);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deletePostById(@PathVariable long id) {
+        userService.deleteUserById(id);
+
+        return ResponseEntity.ok("User " + id + " deleted successfully");
     }
 }
