@@ -75,17 +75,6 @@ public class UserService {
         List<User> users = entityManager.createQuery(criteriaQuery).getResultList();
 
         return convertToResponseDtoList(users);
-
-
-//        List<User> users;
-//
-//        if (havingMoreThanNPosts != null) {
-//            users = userRepo.findUsersHavingPostsMoreThan(havingMoreThanNPosts);
-//        } else {
-//            users = userRepo.findAll();
-//        }
-//
-//        return convertToResponseDtoList(users);
     }
 
     public UserResponseDto findUserById(long id) {
