@@ -1,11 +1,13 @@
 package edu.miu.demoinclass.controller;
 
+import edu.miu.demoinclass.aspect.ExecutionTime;
 import edu.miu.demoinclass.dto.input.CommentDto;
 import edu.miu.demoinclass.dto.input.UserDto;
 import edu.miu.demoinclass.dto.output.CommentResponseDto;
 import edu.miu.demoinclass.dto.output.PostResponseDto;
 import edu.miu.demoinclass.dto.output.UserResponseDto;
 import edu.miu.demoinclass.service.CommentService;
+import edu.miu.demoinclass.service.ExceptionLogService;
 import edu.miu.demoinclass.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,11 +21,17 @@ public class UserController {
 
     private final UserService userService;
     private final CommentService commentService;
+    private final ExceptionLogService exceptionLogService;
 
     @Autowired
-    public UserController(CommentService commentService, UserService userService) {
+    public UserController(
+            CommentService commentService,
+            UserService userService,
+            ExceptionLogService exceptionLogService
+    ) {
         this.commentService = commentService;
         this.userService = userService;
+        this.exceptionLogService = exceptionLogService;
     }
 
     @GetMapping
@@ -37,6 +45,7 @@ public class UserController {
         return ResponseEntity.ok(users);
     }
 
+    @ExecutionTime
     @GetMapping("/{id}")
     public ResponseEntity<UserResponseDto> findUserById(@PathVariable long id) {
         UserResponseDto responseDto = userService.findUserById(id);
@@ -88,5 +97,16 @@ public class UserController {
         userService.deleteUserById(id);
 
         return ResponseEntity.ok("User " + id + " deleted successfully");
+    }
+
+    @GetMapping("/throwException")
+    public String throwException() {
+        try {
+            throw new RuntimeException("This is a test exception");
+        } catch (Exception e) {
+            exceptionLogService.logException("fakeUser", "throwException", e);
+
+            return "Exception thrown and logged.";
+        }
     }
 }
