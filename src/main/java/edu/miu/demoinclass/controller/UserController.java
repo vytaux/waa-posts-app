@@ -101,12 +101,6 @@ public class UserController {
 
     @GetMapping("/throwException")
     public String throwException() {
-        try {
-            throw new RuntimeException("This is a test exception");
-        } catch (Exception e) {
-            exceptionLogService.logException("fakeUser", "throwException", e);
-
-            return "Exception thrown and logged.";
-        }
+        throw new RuntimeException("This is a test exception");
     }
 }

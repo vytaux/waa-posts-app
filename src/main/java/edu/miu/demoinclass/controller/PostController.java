@@ -1,6 +1,5 @@
 package edu.miu.demoinclass.controller;
 
-import edu.miu.demoinclass.aspect.LogOperation;
 import edu.miu.demoinclass.dto.input.PostDto;
 import edu.miu.demoinclass.dto.output.PostResponseDto;
 import edu.miu.demoinclass.service.PostService;
@@ -21,7 +20,6 @@ public class PostController {
         this.postService = postService;
     }
 
-    @LogOperation
     @GetMapping
     public ResponseEntity<List<PostResponseDto>> findAllPosts(
         @RequestParam(required = false) String author,
