@@ -19,7 +19,7 @@ public class ExceptionLoggingAspect {
         this.exceptionLogRepo = exceptionLogRepo;
     }
 
-    @AfterThrowing(pointcut = "execution(* edu.miu.demoinclass..*.*(..))", throwing = "exception")
+    @AfterThrowing(pointcut = "execution(* edu.miu.demoinclass.controller..*.*(..))", throwing = "exception")
     public void logException(JoinPoint joinPoint, Exception exception) {
         ExceptionLog exceptionLog = createExceptionLog(joinPoint, exception);
         exceptionLogRepo.save(exceptionLog);

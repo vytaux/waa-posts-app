@@ -1,21 +1,19 @@
 package edu.miu.demoinclass.entity;
 
+import lombok.Data;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import lombok.Data;
-
-import java.util.Date;
 
 @Entity
 @Data
-public class Logger {
+public class Role {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
+    private int id;
 
-    Date datetime;
-    String principle;
-    String operation;
+    private String role;
 }
