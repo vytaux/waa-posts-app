@@ -1,13 +1,10 @@
 package edu.miu.demoinclass.aspect;
 
-import edu.miu.demoinclass.model.ExceptionLog;
+import edu.miu.demoinclass.entity.ExceptionLog;
 import edu.miu.demoinclass.repository.ExceptionLogRepo;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Pointcut;
-import org.aspectj.lang.reflect.MethodSignature;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;

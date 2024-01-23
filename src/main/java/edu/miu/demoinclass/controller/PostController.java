@@ -1,7 +1,7 @@
 package edu.miu.demoinclass.controller;
 
-import edu.miu.demoinclass.dto.input.PostDto;
-import edu.miu.demoinclass.dto.output.PostResponseDto;
+import edu.miu.demoinclass.entity.dto.input.PostDto;
+import edu.miu.demoinclass.entity.dto.output.PostResponseDto;
 import edu.miu.demoinclass.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

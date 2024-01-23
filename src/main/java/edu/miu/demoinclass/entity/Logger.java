@@ -1,4 +1,4 @@
-package edu.miu.demoinclass.model;
+package edu.miu.demoinclass.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

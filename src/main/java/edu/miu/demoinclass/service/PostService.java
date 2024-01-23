@@ -1,9 +1,9 @@
 package edu.miu.demoinclass.service;
 
-import edu.miu.demoinclass.dto.input.PostDto;
-import edu.miu.demoinclass.dto.output.PostResponseDto;
+import edu.miu.demoinclass.entity.dto.input.PostDto;
+import edu.miu.demoinclass.entity.dto.output.PostResponseDto;
 import edu.miu.demoinclass.exception.PostNotFoundException;
-import edu.miu.demoinclass.model.Post;
+import edu.miu.demoinclass.entity.Post;
 import edu.miu.demoinclass.repository.PostRepo;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.CriteriaBuilder;

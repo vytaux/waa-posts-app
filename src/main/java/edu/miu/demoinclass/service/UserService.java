@@ -1,14 +1,14 @@
 package edu.miu.demoinclass.service;
 
-import edu.miu.demoinclass.dto.input.UserDto;
-import edu.miu.demoinclass.dto.output.CommentResponseDto;
-import edu.miu.demoinclass.dto.output.PostResponseDto;
-import edu.miu.demoinclass.dto.output.UserResponseDto;
+import edu.miu.demoinclass.entity.dto.input.UserDto;
+import edu.miu.demoinclass.entity.dto.output.CommentResponseDto;
+import edu.miu.demoinclass.entity.dto.output.PostResponseDto;
+import edu.miu.demoinclass.entity.dto.output.UserResponseDto;
 import edu.miu.demoinclass.exception.CommentNotFoundException;
 import edu.miu.demoinclass.exception.PostNotFoundException;
 import edu.miu.demoinclass.exception.UserNotFoundException;
-import edu.miu.demoinclass.model.Post;
-import edu.miu.demoinclass.model.User;
+import edu.miu.demoinclass.entity.Post;
+import edu.miu.demoinclass.entity.User;
 import edu.miu.demoinclass.repository.PostRepo;
 import edu.miu.demoinclass.repository.UserRepo;
 import jakarta.persistence.EntityManager;

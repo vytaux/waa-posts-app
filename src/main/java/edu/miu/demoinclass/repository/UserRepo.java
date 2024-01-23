@@ -1,6 +1,6 @@
 package edu.miu.demoinclass.repository;
 
-import edu.miu.demoinclass.model.User;
+import edu.miu.demoinclass.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

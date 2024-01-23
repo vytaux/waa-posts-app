@@ -1,6 +1,6 @@
 package edu.miu.demoinclass.aspect;
 
-import edu.miu.demoinclass.model.Logger;
+import edu.miu.demoinclass.entity.Logger;
 import edu.miu.demoinclass.repository.LoggerRepo;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;

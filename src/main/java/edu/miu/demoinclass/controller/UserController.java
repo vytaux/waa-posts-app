@@ -1,11 +1,11 @@
 package edu.miu.demoinclass.controller;
 
-import edu.miu.demoinclass.aspect.ExecutionTime;
-import edu.miu.demoinclass.dto.input.CommentDto;
-import edu.miu.demoinclass.dto.input.UserDto;
-import edu.miu.demoinclass.dto.output.CommentResponseDto;
-import edu.miu.demoinclass.dto.output.PostResponseDto;
-import edu.miu.demoinclass.dto.output.UserResponseDto;
+import edu.miu.demoinclass.aspect.annotation.ExecutionTime;
+import edu.miu.demoinclass.entity.dto.input.CommentDto;
+import edu.miu.demoinclass.entity.dto.input.UserDto;
+import edu.miu.demoinclass.entity.dto.output.CommentResponseDto;
+import edu.miu.demoinclass.entity.dto.output.PostResponseDto;
+import edu.miu.demoinclass.entity.dto.output.UserResponseDto;
 import edu.miu.demoinclass.service.CommentService;
 import edu.miu.demoinclass.service.ExceptionLogService;
 import edu.miu.demoinclass.service.UserService;

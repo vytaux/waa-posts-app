@@ -1,6 +1,6 @@
 package edu.miu.demoinclass.service;
 
-import edu.miu.demoinclass.model.ExceptionLog;
+import edu.miu.demoinclass.entity.ExceptionLog;
 import edu.miu.demoinclass.repository.ExceptionLogRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

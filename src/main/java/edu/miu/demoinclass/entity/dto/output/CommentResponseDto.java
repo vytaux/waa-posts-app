@@ -1,4 +1,4 @@
-package edu.miu.demoinclass.dto.output;
+package edu.miu.demoinclass.entity.dto.output;
 
 import lombok.Data;
 

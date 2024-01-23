@@ -1,4 +1,4 @@
-package edu.miu.demoinclass.model;
+package edu.miu.demoinclass.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ExecutionTimeAspect {
 
-    @Around("@annotation(edu.miu.demoinclass.aspect.ExecutionTime)")
+    @Around("@annotation(edu.miu.demoinclass.aspect.annotation.ExecutionTime)")
     public Object measureExecutionTime(ProceedingJoinPoint joinPoint) throws Throwable {
         long startTime = System.currentTimeMillis();
 

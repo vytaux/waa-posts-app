@@ -1,26 +1,13 @@
 package edu.miu.demoinclass.service;
 
-import edu.miu.demoinclass.dto.input.CommentDto;
-import edu.miu.demoinclass.dto.input.UserDto;
-import edu.miu.demoinclass.dto.output.CommentResponseDto;
-import edu.miu.demoinclass.dto.output.PostResponseDto;
-import edu.miu.demoinclass.dto.output.UserResponseDto;
-import edu.miu.demoinclass.exception.CommentNotFoundException;
+import edu.miu.demoinclass.entity.dto.input.CommentDto;
 import edu.miu.demoinclass.exception.PostNotFoundException;
-import edu.miu.demoinclass.exception.UserNotFoundException;
-import edu.miu.demoinclass.model.Comment;
-import edu.miu.demoinclass.model.Post;
-import edu.miu.demoinclass.model.User;
-import edu.miu.demoinclass.repository.CommentRepo;
+import edu.miu.demoinclass.entity.Comment;
+import edu.miu.demoinclass.entity.Post;
 import edu.miu.demoinclass.repository.PostRepo;
-import edu.miu.demoinclass.repository.UserRepo;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class CommentService {
