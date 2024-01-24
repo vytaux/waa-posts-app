@@ -7,6 +7,7 @@ import java.util.List;
 @Data
 public class UserResponseDto {
     long id;
-    String name;
+    String firstname;
+    String lastname;
     List<PostResponseDto> posts;
 }

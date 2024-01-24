@@ -5,12 +5,14 @@ import edu.miu.demoinclass.entity.dto.output.PostResponseDto;
 import edu.miu.demoinclass.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/posts")
+@RequestMapping("/api/v1/posts")
 public class PostController {
 
     private final PostService postService;
@@ -38,8 +40,12 @@ public class PostController {
     }
 
     @PostMapping
-    public ResponseEntity<Long> createPost(@RequestBody PostDto postDto) {
-        Long savedPostId = postService.createAndSavePost(postDto);
+    public ResponseEntity<Long> createPost(
+            @RequestBody PostDto postDto,
+            // Pass in authUser explicitly, instead of getting in PostService
+            @AuthenticationPrincipal UserDetails userDetails
+    ) {
+        Long savedPostId = postService.createAndSavePost(userDetails, postDto);
 
         return ResponseEntity.ok(savedPostId);
     }

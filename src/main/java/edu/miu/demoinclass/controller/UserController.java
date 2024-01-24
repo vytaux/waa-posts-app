@@ -7,7 +7,6 @@ import edu.miu.demoinclass.entity.dto.output.CommentResponseDto;
 import edu.miu.demoinclass.entity.dto.output.PostResponseDto;
 import edu.miu.demoinclass.entity.dto.output.UserResponseDto;
 import edu.miu.demoinclass.service.CommentService;
-import edu.miu.demoinclass.service.ExceptionLogService;
 import edu.miu.demoinclass.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,22 +15,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/v1/users")
 public class UserController {
 
     private final UserService userService;
     private final CommentService commentService;
-    private final ExceptionLogService exceptionLogService;
 
     @Autowired
     public UserController(
             CommentService commentService,
-            UserService userService,
-            ExceptionLogService exceptionLogService
+            UserService userService
     ) {
         this.commentService = commentService;
         this.userService = userService;
-        this.exceptionLogService = exceptionLogService;
     }
 
     @GetMapping

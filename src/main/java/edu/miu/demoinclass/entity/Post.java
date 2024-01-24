@@ -10,12 +10,15 @@ import java.util.List;
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
-    String title;
-    String content;
-    String author;
+    private long id;
+    private String title;
+    private String content;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User author;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "post_id")
-    List<Comment> comments;
+    private List<Comment> comments;
 }

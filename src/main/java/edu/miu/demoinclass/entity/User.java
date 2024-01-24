@@ -2,26 +2,25 @@ package edu.miu.demoinclass.entity;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 
 import java.util.List;
 
 @Entity
 @Data
-@Table(name = "\"user\"") // Use double quotes to handle reserved keyword
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
+    private long id;
 
-    String name;
-
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    List<Post> posts;
-
+    private String firstname;
+    private String lastname;
     private String email;
     private String password;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "author")
+    private List<Post> posts;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable

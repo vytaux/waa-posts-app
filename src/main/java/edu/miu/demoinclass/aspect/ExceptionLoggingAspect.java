@@ -1,37 +1,23 @@
 package edu.miu.demoinclass.aspect;
 
-import edu.miu.demoinclass.entity.ExceptionLog;
-import edu.miu.demoinclass.repository.ExceptionLogRepo;
+import edu.miu.demoinclass.service.ExceptionLogService;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
-
 @Aspect
 @Component
 public class ExceptionLoggingAspect {
 
-    private final ExceptionLogRepo exceptionLogRepo;
+    private final ExceptionLogService exceptionLogService;
 
-    public ExceptionLoggingAspect(ExceptionLogRepo exceptionLogRepo) {
-        this.exceptionLogRepo = exceptionLogRepo;
+    public ExceptionLoggingAspect(ExceptionLogService exceptionLogService) {
+        this.exceptionLogService = exceptionLogService;
     }
 
     @AfterThrowing(pointcut = "execution(* edu.miu.demoinclass.controller..*.*(..))", throwing = "exception")
     public void logException(JoinPoint joinPoint, Exception exception) {
-        ExceptionLog exceptionLog = createExceptionLog(joinPoint, exception);
-        exceptionLogRepo.save(exceptionLog);
-    }
-
-    private ExceptionLog createExceptionLog(JoinPoint joinPoint, Exception exception) {
-        ExceptionLog exceptionLog = new ExceptionLog();
-        exceptionLog.setDatetime(new Date());
-        exceptionLog.setPrinciple("fakeUser");
-        exceptionLog.setExceptionType(exception.getClass().getName());
-        exceptionLog.setOperation(joinPoint.getSignature().toShortString());
-
-        return exceptionLog;
+        exceptionLogService.logException(joinPoint, exception);
     }
 }

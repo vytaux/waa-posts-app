@@ -2,7 +2,6 @@ package edu.miu.demoinclass.config;
 
 import edu.miu.demoinclass.filter.JwtFilter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -31,20 +30,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override // Authorization
     protected void configure(HttpSecurity http) throws Exception {
-
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/v1/authenticate/**").permitAll()
-                .antMatchers("/api/v1/products").hasAuthority("CLIENT")
-                .anyRequest()
-                .authenticated()
+                .antMatchers("/api/v1/authenticate").permitAll() // Allow access to /authenticate for everyone
+                .antMatchers("/api/v1/admin").hasAuthority("ADMIN") // Only ADMIN can access /admin
+                .anyRequest().hasAnyAuthority("USER", "ADMIN") // Both USER and ADMIN can access other URLs
                 .and()
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-
     }
 
     @Bean
